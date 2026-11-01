@@ -1,0 +1,5 @@
+*.syx
+*.bin
+*.so
+out/
+*.work/

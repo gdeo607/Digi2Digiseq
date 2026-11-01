@@ -1,0 +1,25 @@
+{
+ "id": "digiseq-dt2",
+ "version": "0.2",
+ "title": "DIGISEQ-DT2",
+ "category": "Sequencer",
+ "license": "GPL-2.0-or-later",
+ "author": "Robbie (DIGISEQ for Digitakt); Digitakt II 1.17 port",
+ "description": "DIGISEQ for the Digitakt II, OS 1.17: sequencer types a track plays in place of its own trigs, chosen per track (TYPE: OFF, SNAKE or 185), on all 16 tracks, audio and MIDI. SNAKE: a Cartesian sequencer after MDD Snake (and Make Noise's Rene), eight cells in a 4 x 2 grid walked by a path. 185: a stage sequencer after ML-185 (and RYK's M-185): eight stages, each with a pitch, a velocity, a length of 1-8 clock pulses and a mode (OFF, ONE, ALL every DIV pulses, HOLD for the whole stage), with DIR, STAGES, CLOCK (1/8 .. 1X), SCALE, RANGE, note LEN and SHIFT. Ported from Robbie's DIGISEQ for Digitakt 0.2; replaces DIGISNAKE-DT2. Press TRIG on the TRIG page until its pages come round to open it; hold TRIG + UP / DOWN changes TYPE. Not on the Digitakt II yet: PRINT and CLOCK 2X. Not saved with the project. Experimental.",
+ "device": "digitakt-mk2",
+ "os": "1.17",
+ "sources": ["digiseq_dt2.c", "fire.s"],
+ "cflags": ["-fno-tree-loop-distribute-patterns"],
+ "sites": [
+  {"addr": "0x400d6982", "stock": "4fefffcc48d77cfc", "op": "jmp", "target": "dsq_audio"},
+  {"addr": "0x400d6e88", "stock": "4fefffcc48d77cfc", "op": "jmp", "target": "dsq_midi"}
+ ],
+ "subscribe": [
+  {"event": "ev_key", "fn": "digiseq_key", "order": 40},
+  {"event": "ev_enc", "fn": "digiseq_enc", "order": 40},
+  {"event": "ev_tick", "fn": "digiseq_tick", "order": 50},
+  {"event": "ev_draw", "fn": "digiseq_draw", "order": 90}
+ ],
+ "requires": ["core"],
+ "conflicts": ["digisnake-dt2"]
+}
