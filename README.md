@@ -11,7 +11,10 @@ type's sequencer plays in place of the track's own trigs. It works on all 16 tra
 - **ARP**: an arpeggiator played by the track's own note trigs: a trig holds its note (its NOTE and VEL locks) for its
   LEN and the arp plays from it every SPD steps, with OFFSETS, MODE, RNG, SCALE, RPT, WALK and HOLD.
 
-Ported from Robbie's DIGISEQ for Digitakt (Digitakt mk1): 0.2, then 0.8's ARP. Press TRIG on the TRIG page until its
+**DIGISEQ is Robbie's.** It is [DIGISEQ for Digitakt](https://github.com/ClaidArremer/digitakt-digiseq) by Robbie
+(ClaidArremer), for the Digitakt mk1. I did not create it: this repository adapts Robbie's work to the Digitakt II
+(its hooks, its pattern and its screens), and the credit for the sequencers and their design is Robbie's. Adapted
+here: 0.2, then 0.8's ARP. Press TRIG on the TRIG page until its
 pages come round to open it; hold TRIG + UP / DOWN changes TYPE. **PRINT** (TRIG + FUNC + REC) writes what SNAKE or
 185 plays through the track's length into the track's trigs (each note a note trig with its NOTE and VEL locks, on
 the step, no condition; 185's held notes with their LEN), removes the note trigs on its rests (lock trigs stay) and
@@ -26,14 +29,14 @@ held keys, live recording. The types are not saved with the project (PRINT keeps
 | | |
 |---|---|
 | Unit | Digitakt II, OS 1.17 |
-| Mods | **core-dt2 2.6** ([Digi2Core](https://github.com/gdeo607/Digi2Core): its pattern service) and this mod, `elemods/digiseq-dt2-0.5.elemod` |
+| Mods | **core-dt2 2.6.1** or later ([Digi2Core](https://github.com/gdeo607/Digi2Core): its pattern service) and this mod, `elemods/digiseq-dt2-0.5.elemod`. Core 2.4-2.6 crash the unit at boot: use 2.6.1 |
 | Not with | `digisnake-dt2` (it conflicts: DIGISEQ replaces it) |
 
 Build the firmware from your own stock OS file:
 
 ```
 python -m elekloader.patch --stock Digitakt_II_OS1.17.syx \
-  --mod core-2.6.elemod --mod elemods/digiseq-dt2-0.5.elemod --out Digitakt_II_digiseq.syx
+  --mod core-2.6.1.elemod --mod elemods/digiseq-dt2-0.5.elemod --out Digitakt_II_digiseq.syx
 ```
 
 Never share the resulting .syx: it contains Elektron's OS.
@@ -43,11 +46,35 @@ Never share the resulting .syx: it contains Elektron's OS.
 | path | what |
 |---|---|
 | `mod/digiseq_dt2.c` | the sequencers (SNAKE, 185, ARP), PRINT, the keys, the encoders, the tick and the drawing |
-| `mod/core_pattern.h` | core 2.6's pattern service, which PRINT uses (a copy of Digi2Core's `core/pattern.h`) |
+| `mod/core_pattern.h` | core 2.6.1's pattern service, which PRINT uses (a copy of Digi2Core's `core/pattern.h`) |
 | `mod/fire.s` | the entry into the audio and MIDI sequencing hooks |
 | `mod/mod.json` | the manifest: subscriptions, hook sites, conflicts |
 | `elemods/` | the built mod |
 
-## Licence
+## Changes
 
-GPL-2.0-or-later (see `LICENSE`), as Robbie's DIGISEQ. The SNAKE and 185 algorithms are credited above.
+- **0.5**: PRINT (TRIG + FUNC + REC) and its undo, on core 2.6.1's pattern service.
+- **0.4**: ARP starts from a trig's own NOTE and VEL locks.
+- **0.3**: ARP, from DIGISEQ for Digitakt 0.8 (0.3's ARP with 0.6's WALK 0 and 0.7's SCALE).
+- **0.2**: SNAKE and 185 per track.
+
+Checked on a Digitakt II (1.17, core 2.6.1): SNAKE, 185, ARP and its locks, PRINT and its undo, a removed rest trig,
+lock trigs kept, conditions cleared and the printed trigs saved with the project.
+
+## Credits and licence
+
+- **DIGISEQ** is by **Robbie** (ClaidArremer): [DIGISEQ for Digitakt](https://github.com/ClaidArremer/digitakt-digiseq),
+  designed and tested on a Digitakt mk1 (GPL-2.0-or-later). Its SNAKE is Robbie's
+  [DIGISNAKE for Digitakt](https://github.com/ClaidArremer/digitakt-digisnake).
+- SNAKE is after Maxime Dangles' **MDD Snake** and Make Noise's **René**; 185 is after **ML-185**, Nico Starke's free
+  Max for Live device, itself after RYK's **M-185** for the Roland System 100m.
+- core-dt2 2.x ([Digi2Core](https://github.com/gdeo607/Digi2Core)) and irpina's
+  [elekloader](https://github.com/irpina/elekloader), which it is built with.
+- The Digitakt II adaptation (this repository): gdeo607.
+
+Licence: GPL-2.0-or-later (see `LICENSE`), as Robbie's DIGISEQ.
+
+## Trademarks
+
+Elektron and Digitakt are trademarks of Elektron Music Machines; René is Make Noise's; M-185 is RYK's. They are named
+only to say what this works with or was inspired by. This project is not affiliated with or endorsed by any of them.
