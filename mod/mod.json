@@ -1,25 +1,60 @@
 {
  "id": "digiseq-dt2",
- "version": "0.2",
+ "version": "0.5",
  "title": "DIGISEQ-DT2",
  "category": "Sequencer",
  "license": "GPL-2.0-or-later",
  "author": "Robbie (DIGISEQ for Digitakt); Digitakt II 1.17 port",
- "description": "DIGISEQ for the Digitakt II, OS 1.17: sequencer types a track plays in place of its own trigs, chosen per track (TYPE: OFF, SNAKE or 185), on all 16 tracks, audio and MIDI. SNAKE: a Cartesian sequencer after MDD Snake (and Make Noise's Rene), eight cells in a 4 x 2 grid walked by a path. 185: a stage sequencer after ML-185 (and RYK's M-185): eight stages, each with a pitch, a velocity, a length of 1-8 clock pulses and a mode (OFF, ONE, ALL every DIV pulses, HOLD for the whole stage), with DIR, STAGES, CLOCK (1/8 .. 1X), SCALE, RANGE, note LEN and SHIFT. Ported from Robbie's DIGISEQ for Digitakt 0.2; replaces DIGISNAKE-DT2. Press TRIG on the TRIG page until its pages come round to open it; hold TRIG + UP / DOWN changes TYPE. Not on the Digitakt II yet: PRINT and CLOCK 2X. Not saved with the project. Experimental.",
+ "description": "DIGISEQ for the Digitakt II, OS 1.17: sequencer types a track plays in place of its own trigs, chosen per track (TYPE: OFF, SNAKE, 185 or ARP), on all 16 tracks, audio and MIDI. SNAKE: a Cartesian sequencer after MDD Snake (and Make Noise's Rene), eight cells in a 4 x 2 grid walked by a path. 185: a stage sequencer after ML-185 (and RYK's M-185): eight stages, each with a pitch, a velocity, a length of 1-8 clock pulses and a mode (OFF, ONE, ALL every DIV pulses, HOLD for the whole stage). ARP (0.3): an arpeggiator played by the track's note trigs, held for the trig's LEN (INF or HOLD: until the next trig): MODE (UP, DOWN, UP-DN, UP+DN, CONV, DIV, PINKY, THUMB, ORDER, RAND, SHUF), SPD (1/16 .. 1/1), RNG (1-4 octaves), SCALE (CHR or 11 scales, rooted on NOTE), RPT, WALK (0 brings it back), HOLD and a 16-step OFFSETS sequence. Ported from Robbie's DIGISEQ for Digitakt 0.8 (ARP from 0.3, 0.6 and 0.7); replaces DIGISNAKE-DT2. Press TRIG on the TRIG page until its pages come round to open it; hold TRIG + UP / DOWN changes TYPE. Not on the Digitakt II yet: PRINT, CLOCK 2X, ARP from the keyboard, live recording, the stock drop-down messages; a trig's note locks and a MIDI chord's other notes do not reach ARP yet (it takes the track's NOTE). Not saved with the project. Experimental.",
  "device": "digitakt-mk2",
  "os": "1.17",
- "sources": ["digiseq_dt2.c", "fire.s"],
- "cflags": ["-fno-tree-loop-distribute-patterns"],
+ "sources": [
+  "digiseq_dt2.c",
+  "fire.s"
+ ],
+ "cflags": [
+  "-fno-tree-loop-distribute-patterns"
+ ],
  "sites": [
-  {"addr": "0x400d6982", "stock": "4fefffcc48d77cfc", "op": "jmp", "target": "dsq_audio"},
-  {"addr": "0x400d6e88", "stock": "4fefffcc48d77cfc", "op": "jmp", "target": "dsq_midi"}
+  {
+   "addr": "0x400d6982",
+   "stock": "4fefffcc48d77cfc",
+   "op": "jmp",
+   "target": "dsq_audio"
+  },
+  {
+   "addr": "0x400d6e88",
+   "stock": "4fefffcc48d77cfc",
+   "op": "jmp",
+   "target": "dsq_midi"
+  }
  ],
  "subscribe": [
-  {"event": "ev_key", "fn": "digiseq_key", "order": 40},
-  {"event": "ev_enc", "fn": "digiseq_enc", "order": 40},
-  {"event": "ev_tick", "fn": "digiseq_tick", "order": 50},
-  {"event": "ev_draw", "fn": "digiseq_draw", "order": 90}
+  {
+   "event": "ev_key",
+   "fn": "digiseq_key",
+   "order": 40
+  },
+  {
+   "event": "ev_enc",
+   "fn": "digiseq_enc",
+   "order": 40
+  },
+  {
+   "event": "ev_tick",
+   "fn": "digiseq_tick",
+   "order": 50
+  },
+  {
+   "event": "ev_draw",
+   "fn": "digiseq_draw",
+   "order": 90
+  }
  ],
- "requires": ["core"],
- "conflicts": ["digisnake-dt2"]
+ "requires": [
+  "core"
+ ],
+ "conflicts": [
+  "digisnake-dt2"
+ ]
 }
